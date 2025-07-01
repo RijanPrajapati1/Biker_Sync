@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "904566766634",
-    "project_id": "socialmediaapp-2f510",
-    "storage_bucket": "socialmediaapp-2f510.firebasestorage.app"
+    "project_number": "214212738748",
+    "project_id": "ui-ux-bikersync",
+    "storage_bucket": "ui-ux-bikersync.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:904566766634:android:3f01d8d87acd4c3d02d753",
+        "mobilesdk_app_id": "1:214212738748:android:dc34e5ef5bca006a60dab9",
         "android_client_info": {
-          "package_name": "com.example.socialmediaapp"
+          "package_name": "com.rijan.social_media_app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBdVQnPMLxJ5PPCi5RYxu9sj7O6ITQQLdI"
+          "current_key": "AIzaSyDw0o44I4Ta37ndwk7NlwL3AEo6WKZWlB4"
         }
       ],
       "services": {
