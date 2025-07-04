@@ -1,26 +1,95 @@
 {
   "project_info": {
-    "project_number": "214212738748",
-    "project_id": "ui-ux-bikersync",
-    "storage_bucket": "ui-ux-bikersync.firebasestorage.app"
+    "project_number": "208028318707",
+    "firebase_url": "https://todo-app-2a629-default-rtdb.firebaseio.com",
+    "project_id": "todo-app-2a629",
+    "storage_bucket": "todo-app-2a629.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:214212738748:android:dc34e5ef5bca006a60dab9",
+        "mobilesdk_app_id": "1:208028318707:android:7832627580c746cb553086",
         "android_client_info": {
-          "package_name": "com.rijan.social_media_app"
+          "package_name": "com.example.firstweek"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "208028318707-iql0gt2rjvsvldb55bun2okdkfjdtsd0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDw0o44I4Ta37ndwk7NlwL3AEo6WKZWlB4"
+          "current_key": "AIzaSyCpbchRd2Z63T5LmzFm0EHE-4VjxAKIBN8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208028318707-iql0gt2rjvsvldb55bun2okdkfjdtsd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208028318707:android:309e567d194836ef553086",
+        "android_client_info": {
+          "package_name": "com.example.todo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208028318707-iql0gt2rjvsvldb55bun2okdkfjdtsd0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpbchRd2Z63T5LmzFm0EHE-4VjxAKIBN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208028318707-iql0gt2rjvsvldb55bun2okdkfjdtsd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208028318707:android:7e966e8431306c6b553086",
+        "android_client_info": {
+          "package_name": "com.rijan.biker_sync"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208028318707-iql0gt2rjvsvldb55bun2okdkfjdtsd0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpbchRd2Z63T5LmzFm0EHE-4VjxAKIBN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208028318707-iql0gt2rjvsvldb55bun2okdkfjdtsd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

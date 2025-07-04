@@ -1,4 +1,4 @@
-package com.rijan.social_media_app
+package com.rijan.biker_sync
 
 import io.flutter.embedding.android.FlutterActivity
 

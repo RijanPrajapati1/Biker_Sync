@@ -11,19 +11,24 @@ class UserService extends Service {
     return firebaseAuth.currentUser!.uid;
   }
 
-//tells when the user is online or not and updates the last seen for the messages
+  //tells when the user is online or not and updates the last seen for the messages
   setUserStatus(bool isOnline) {
     var user = firebaseAuth.currentUser;
     if (user != null) {
-      usersRef
-          .doc(user.uid)
-          .update({'isOnline': isOnline, 'lastSeen': Timestamp.now()});
+      usersRef.doc(user.uid).update({
+        'isOnline': isOnline,
+        'lastSeen': Timestamp.now(),
+      });
     }
   }
 
-//updates user profile in the Edit Profile Screen
-  updateProfile(
-      {File? image, String? username, String? bio, String? country}) async {
+  //updates user profile in the Edit Profile Screen
+  updateProfile({
+    File? image,
+    String? username,
+    String? bio,
+    String? country,
+  }) async {
     DocumentSnapshot doc = await usersRef.doc(currentUid()).get();
     var users = UserModel.fromJson(doc.data() as Map<String, dynamic>);
     users.username = username;

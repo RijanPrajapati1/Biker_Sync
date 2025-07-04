@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.rijan.social_media_app"
+    namespace = "com.rijan.biker_sync"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.rijan.social_media_app"
+        applicationId = "com.rijan.biker_sync"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 23
