@@ -22,21 +22,22 @@ class _LandingState extends State<Landing> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Image.asset(
-                  'assets/images/new1.png',
+                  'assets/images/my_logo.jpg',
                   height: 200.0,
-                  width: 200.0,
+                  width: 300.0,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
+            SizedBox(height: 1),
             Text(
-              'WOOBLE',
+              'Biker Sync',
               style: TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.w900,
+                fontSize: 30.0,
+                fontWeight: FontWeight.w600,
                 fontFamily: 'Ubuntu-Regular',
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -50,9 +51,7 @@ class _LandingState extends State<Landing> {
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushReplacement(
-                    CupertinoPageRoute(
-                      builder: (_) => Login(),
-                    ),
+                    CupertinoPageRoute(builder: (_) => Login()),
                   );
                 },
                 child: Container(
@@ -84,9 +83,7 @@ class _LandingState extends State<Landing> {
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushReplacement(
-                    CupertinoPageRoute(
-                      builder: (_) => Login(),
-                    ),
+                    CupertinoPageRoute(builder: (_) => Login()),
                   );
                 },
                 child: Container(
@@ -114,7 +111,7 @@ class _LandingState extends State<Landing> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

@@ -41,9 +41,7 @@ class UserPost extends StatelessWidget {
         },
         closedElevation: 0.0,
         closedShape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         onClosed: (v) {},
         closedColor: Theme.of(context).cardColor,
@@ -65,8 +63,10 @@ class UserPost extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 3.0, vertical: 5.0),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 3.0,
+                      vertical: 5.0,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,9 +86,30 @@ class UserPost extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                child: Icon(
-                                  CupertinoIcons.chat_bubble,
-                                  size: 25.0,
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      CupertinoIcons.chat_bubble,
+                                      size: 25.0,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    if (post?.date != null &&
+                                        post!.date!.isNotEmpty)
+                                      _infoChip(
+                                        Icons.calendar_today,
+                                        post!.date!,
+                                      ),
+                                    if (post?.time != null &&
+                                        post!.time!.isNotEmpty) ...[
+                                      const SizedBox(width: 6),
+                                      _infoChip(Icons.access_time, post!.time!),
+                                    ],
+                                    if (post?.gathering != null &&
+                                        post!.gathering!.isNotEmpty) ...[
+                                      const SizedBox(width: 6),
+                                      _infoChip(Icons.group, post!.gathering!),
+                                    ],
+                                  ],
                                 ),
                               ),
                             ],
@@ -103,16 +124,24 @@ class UserPost extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(left: 0.0),
                                 child: StreamBuilder(
-                                  stream: likesRef
-                                      .where('postId', isEqualTo: post!.postId)
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream:
+                                      likesRef
+                                          .where(
+                                            'postId',
+                                            isEqualTo: post!.postId,
+                                          )
+                                          .snapshots(),
+                                  builder: (
+                                    context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot,
+                                  ) {
                                     if (snapshot.hasData) {
                                       QuerySnapshot snap = snapshot.data!;
                                       List<DocumentSnapshot> docs = snap.docs;
                                       return buildLikesCount(
-                                          context, docs.length ?? 0);
+                                        context,
+                                        docs.length ?? 0,
+                                      );
                                     } else {
                                       return buildLikesCount(context, 0);
                                     }
@@ -122,17 +151,22 @@ class UserPost extends StatelessWidget {
                             ),
                             SizedBox(width: 5.0),
                             StreamBuilder(
-                              stream: commentRef
-                                  .doc(post!.postId!)
-                                  .collection("comments")
-                                  .snapshots(),
-                              builder: (context,
-                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                              stream:
+                                  commentRef
+                                      .doc(post!.postId!)
+                                      .collection("comments")
+                                      .snapshots(),
+                              builder: (
+                                context,
+                                AsyncSnapshot<QuerySnapshot> snapshot,
+                              ) {
                                 if (snapshot.hasData) {
                                   QuerySnapshot snap = snapshot.data!;
                                   List<DocumentSnapshot> docs = snap.docs;
                                   return buildCommentsCount(
-                                      context, docs.length ?? 0);
+                                    context,
+                                    docs.length ?? 0,
+                                  );
                                 } else {
                                   return buildCommentsCount(context, 0);
                                 }
@@ -141,17 +175,18 @@ class UserPost extends StatelessWidget {
                           ],
                         ),
                         Visibility(
-                          visible: post!.description != null &&
+                          visible:
+                              post!.description != null &&
                               post!.description.toString().isNotEmpty,
                           child: Padding(
                             padding: const EdgeInsets.only(left: 5.0, top: 3.0),
                             child: Text(
                               '${post?.description ?? ""}',
                               style: TextStyle(
-                                  // color:
-                                  //     Theme.of(context).textTheme.caption!.color,
-                                  // fontSize: 15.0,
-                                  ),
+                                // color:
+                                //     Theme.of(context).textTheme.caption!.color,
+                                // fontSize: 15.0,
+                              ),
                               maxLines: 2,
                             ),
                           ),
@@ -167,7 +202,7 @@ class UserPost extends StatelessWidget {
                         // SizedBox(height: 5.0),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
               buildUser(context),
@@ -178,41 +213,38 @@ class UserPost extends StatelessWidget {
     );
   }
 
+  Widget _infoChip(IconData icon, String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: Colors.grey.shade600),
+          SizedBox(width: 4),
+          Text(
+            text,
+            style: TextStyle(fontSize: 12, color: Colors.grey.shade800),
+          ),
+        ],
+      ),
+    );
+  }
+
   buildLikeButton() {
     return StreamBuilder(
-      stream: likesRef
-          .where('postId', isEqualTo: post!.postId)
-          .where('userId', isEqualTo: currentUserId())
-          .snapshots(),
+      stream:
+          likesRef
+              .where('postId', isEqualTo: post!.postId)
+              .where('userId', isEqualTo: currentUserId())
+              .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           List<QueryDocumentSnapshot> docs = snapshot.data?.docs ?? [];
 
-          ///replaced this with an animated like button
-          // return IconButton(
-          //   onPressed: () {
-          //     if (docs.isEmpty) {
-          //       likesRef.add({
-          //         'userId': currentUserId(),
-          //         'postId': post!.postId,
-          //         'dateCreated': Timestamp.now(),
-          //       });
-          //       addLikesToNotification();
-          //     } else {
-          //       likesRef.doc(docs[0].id).delete();
-          //       services.removeLikeFromNotification(
-          //           post!.ownerId!, post!.postId!, currentUserId());
-          //     }
-          //   },
-          //   icon: docs.isEmpty
-          //       ? Icon(
-          //           CupertinoIcons.heart,
-          //         )
-          //       : Icon(
-          //           CupertinoIcons.heart_fill,
-          //           color: Colors.red,
-          //         ),
-          // );
           Future<bool> onLikeButtonTapped(bool isLiked) async {
             if (docs.isEmpty) {
               likesRef.add({
@@ -225,7 +257,10 @@ class UserPost extends StatelessWidget {
             } else {
               likesRef.doc(docs[0].id).delete();
               services.removeLikeFromNotification(
-                  post!.ownerId!, post!.postId!, currentUserId());
+                post!.ownerId!,
+                post!.postId!,
+                currentUserId(),
+              );
               return isLiked;
             }
           }
@@ -233,21 +268,25 @@ class UserPost extends StatelessWidget {
           return LikeButton(
             onTap: onLikeButtonTapped,
             size: 25.0,
-            circleColor:
-                CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
+            circleColor: CircleColor(
+              start: Color(0xffFFC0CB),
+              end: Color(0xffff0000),
+            ),
             bubblesColor: BubblesColor(
-                dotPrimaryColor: Color(0xffFFA500),
-                dotSecondaryColor: Color(0xffd8392b),
-                dotThirdColor: Color(0xffFF69B4),
-                dotLastColor: Color(0xffff8c00)),
+              dotPrimaryColor: Color(0xffFFA500),
+              dotSecondaryColor: Color(0xffd8392b),
+              dotThirdColor: Color(0xffFF69B4),
+              dotLastColor: Color(0xffff8c00),
+            ),
             likeBuilder: (bool isLiked) {
               return Icon(
                 docs.isEmpty ? Ionicons.heart_outline : Ionicons.heart,
-                color: docs.isEmpty
-                    ? Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black
-                    : Colors.red,
+                color:
+                    docs.isEmpty
+                        ? Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black
+                        : Colors.red,
                 size: 25,
               );
             },
@@ -281,10 +320,7 @@ class UserPost extends StatelessWidget {
       padding: const EdgeInsets.only(left: 7.0),
       child: Text(
         '$count likes',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 10.0,
-        ),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10.0),
       ),
     );
   }
@@ -306,8 +342,9 @@ class UserPost extends StatelessWidget {
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
           DocumentSnapshot snap = snapshot.data!;
-          UserModel user =
-              UserModel.fromJson(snap.data() as Map<String, dynamic>);
+          UserModel user = UserModel.fromJson(
+            snap.data() as Map<String, dynamic>,
+          );
           return Visibility(
             visible: !isMe,
             child: Align(
@@ -330,26 +367,26 @@ class UserPost extends StatelessWidget {
                       children: [
                         user.photoUrl!.isEmpty
                             ? CircleAvatar(
-                                radius: 20.0,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                child: Center(
-                                  child: Text(
-                                    '${user.username![0].toUpperCase()}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w900,
-                                    ),
+                              radius: 20.0,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              child: Center(
+                                child: Text(
+                                  '${user.username![0].toUpperCase()}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w900,
                                   ),
                                 ),
-                              )
-                            : CircleAvatar(
-                                radius: 20.0,
-                                backgroundImage: CachedNetworkImageProvider(
-                                  '${user.photoUrl}',
-                                ),
                               ),
+                            )
+                            : CircleAvatar(
+                              radius: 20.0,
+                              backgroundImage: CachedNetworkImageProvider(
+                                '${user.photoUrl}',
+                              ),
+                            ),
                         SizedBox(width: 5.0),
                         Column(
                           mainAxisSize: MainAxisSize.min,
@@ -389,9 +426,7 @@ class UserPost extends StatelessWidget {
   showProfile(BuildContext context, {String? profileId}) {
     Navigator.push(
       context,
-      CupertinoPageRoute(
-        builder: (_) => Profile(profileId: profileId),
-      ),
+      CupertinoPageRoute(builder: (_) => Profile(profileId: profileId)),
     );
   }
 }

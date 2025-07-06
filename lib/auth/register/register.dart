@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:provider/provider.dart';
-import 'package:social_media_app/auth/login/login.dart';
 import 'package:social_media_app/components/password_text_field.dart';
 import 'package:social_media_app/components/text_form_builder.dart';
 import 'package:social_media_app/utils/validation.dart';
@@ -42,9 +40,7 @@ class _RegisterState extends State<Register> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Already have an account  ',
-                ),
+                Text('Already have an account  '),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Text(
@@ -98,7 +94,7 @@ class _RegisterState extends State<Register> {
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.pin_outline,
-            hintText: "Country",
+            hintText: "Address",
             textInputAction: TextInputAction.next,
             validateFunction: Validations.validateName,
             onSaved: (String val) {
@@ -142,13 +138,14 @@ class _RegisterState extends State<Register> {
             width: 180.0,
             child: ElevatedButton(
               style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.0),
                   ),
                 ),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context).colorScheme.secondary),
+                backgroundColor: WidgetStateProperty.all<Color>(
+                  Theme.of(context).colorScheme.secondary,
+                ),
               ),
               child: Text(
                 'sign up'.toUpperCase(),

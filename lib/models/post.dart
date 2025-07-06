@@ -7,9 +7,11 @@ class PostModel {
   String? username;
   String? location;
   String? description;
+  String? date; // <-- Add this
+  String? time; // <-- Add this
+  String? gathering;
   String? mediaUrl;
   Timestamp? timestamp;
-  
 
   PostModel({
     this.id,
@@ -17,6 +19,9 @@ class PostModel {
     this.ownerId,
     this.location,
     this.description,
+    this.date,
+    this.time,
+    this.gathering,
     this.mediaUrl,
     this.username,
     this.timestamp,
@@ -26,8 +31,12 @@ class PostModel {
     postId = json['postId'];
     ownerId = json['ownerId'];
     location = json['location'];
-    username= json['username'];
+    username = json['username'];
     description = json['description'];
+    date = json['date'];
+    time = json['time'];
+    gathering = json['gathering'];
+
     mediaUrl = json['mediaUrl'];
     timestamp = json['timestamp'];
   }
@@ -39,8 +48,10 @@ class PostModel {
     data['ownerId'] = this.ownerId;
     data['location'] = this.location;
     data['description'] = this.description;
+    data['date'] = this.date;
+    data['time'] = this.time;
+    data['gathering'] = this.gathering;
     data['mediaUrl'] = this.mediaUrl;
-
     data['timestamp'] = this.timestamp;
     data['username'] = this.username;
     return data;
