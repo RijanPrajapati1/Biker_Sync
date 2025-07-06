@@ -18,11 +18,9 @@ class CreatePost extends StatefulWidget {
 class _CreatePostState extends State<CreatePost> {
   @override
   Widget build(BuildContext context) {
-    currentUserId() {
-      return firebaseAuth.currentUser!.uid;
-    }
+    currentUserId() => firebaseAuth.currentUser!.uid;
+    final viewModel = Provider.of<PostsViewModel>(context);
 
-    PostsViewModel viewModel = Provider.of<PostsViewModel>(context);
     return WillPopScope(
       onWillPop: () async {
         await viewModel.resetPost();
@@ -41,7 +39,7 @@ class _CreatePostState extends State<CreatePost> {
                 Navigator.pop(context);
               },
             ),
-            title: Text('WOOBLE'.toUpperCase()),
+            title: Text('Biker Sync'.toUpperCase()),
             centerTitle: true,
             actions: [
               GestureDetector(
@@ -61,13 +59,15 @@ class _CreatePostState extends State<CreatePost> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
           body: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.all(15.0),
             children: [
-              SizedBox(height: 15.0),
+              const SizedBox(height: 10.0),
+
+              // User info
               StreamBuilder(
                 stream: usersRef.doc(currentUserId()).snapshots(),
                 builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -84,104 +84,121 @@ class _CreatePostState extends State<CreatePost> {
                         user.username!,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(
-                        user.email!,
-                      ),
+                      subtitle: Text(user.email!),
                     );
                   }
-                  return Container();
+                  return const SizedBox.shrink();
                 },
               ),
+
+              const SizedBox(height: 10.0),
+
+              // Image picker
               InkWell(
                 onTap: () => showImageChoices(context, viewModel),
                 child: Container(
-                  width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.width - 30,
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5.0),
-                    ),
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-                  child: viewModel.imgLink != null
-                      ? CustomImage(
-                          imageUrl: viewModel.imgLink,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width - 30,
-                          fit: BoxFit.cover,
-                        )
-                      : viewModel.mediaUrl == null
+                  child:
+                      viewModel.imgLink != null
+                          ? CustomImage(
+                            imageUrl: viewModel.imgLink,
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.width - 30,
+                            fit: BoxFit.cover,
+                          )
+                          : viewModel.mediaUrl == null
                           ? Center(
-                              child: Text(
-                                'Upload a Photo',
-                                style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
-                                ),
+                            child: Text(
+                              'Tap to upload photo',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
-                            )
-                          : Image.file(
-                              viewModel.mediaUrl!,
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width - 30,
-                              fit: BoxFit.cover,
                             ),
+                          )
+                          : Image.file(
+                            viewModel.mediaUrl!,
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.width - 30,
+                            fit: BoxFit.cover,
+                          ),
                 ),
               ),
-              SizedBox(height: 20.0),
-              Text(
-                'Post Caption'.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w600,
-                ),
+
+              const SizedBox(height: 25),
+
+              buildCardInput(
+                icon: Ionicons.people_outline,
+                controller: viewModel.gatheringTEC,
+                hint: 'Type of ride or gathering',
+                onChanged: viewModel.setGathering,
               ),
-              TextFormField(
+
+              buildCardInput(
+                icon: Ionicons.calendar_outline,
+                controller: viewModel.dateTEC,
+                hint: 'Select date',
+                readOnly: true,
+                onTap: () async {
+                  DateTime? picked = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2020),
+                    lastDate: DateTime(2100),
+                  );
+                  if (picked != null) {
+                    String formattedDate =
+                        "${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}";
+                    viewModel.dateTEC.text = formattedDate;
+                    viewModel.setDate(formattedDate);
+                  }
+                },
+              ),
+
+              buildCardInput(
+                icon: Ionicons.time_outline,
+                controller: viewModel.timeTEC,
+                hint: 'Select time',
+                readOnly: true,
+                onTap: () async {
+                  TimeOfDay? pickedTime = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                  );
+                  if (pickedTime != null) {
+                    viewModel.timeTEC.text = pickedTime.format(context);
+                    viewModel.setTime(viewModel.timeTEC.text);
+                  }
+                },
+              ),
+
+              buildCardInput(
+                icon: Ionicons.pencil_outline,
+                hint: 'Ride details',
                 initialValue: viewModel.description,
-                decoration: InputDecoration(
-                  hintText: 'Eg. This is very beautiful place!',
-                  focusedBorder: UnderlineInputBorder(),
-                ),
+                onChanged: viewModel.setDescription,
                 maxLines: null,
-                onChanged: (val) => viewModel.setDescription(val),
               ),
-              SizedBox(height: 20.0),
-              Text(
-                'Location'.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.all(0.0),
-                title: Container(
-                  width: 250.0,
-                  child: TextFormField(
-                    controller: viewModel.locationTEC,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(0.0),
-                      hintText: 'United States,Los Angeles!',
-                      focusedBorder: UnderlineInputBorder(),
-                    ),
-                    maxLines: null,
-                    onChanged: (val) => viewModel.setLocation(val),
-                  ),
-                ),
-                trailing: IconButton(
+
+              buildCardInput(
+                icon: Ionicons.location_outline,
+                controller: viewModel.locationTEC,
+                hint: 'Enter location',
+                onChanged: viewModel.setLocation,
+                suffixIcon: IconButton(
+                  icon: Icon(CupertinoIcons.map_pin_ellipse),
                   tooltip: "Use your current location",
-                  icon: Icon(
-                    CupertinoIcons.map_pin_ellipse,
-                    size: 25.0,
-                  ),
-                  iconSize: 30.0,
-                  color: Theme.of(context).colorScheme.secondary,
                   onPressed: () => viewModel.getLocation(),
                 ),
               ),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -189,29 +206,61 @@ class _CreatePostState extends State<CreatePost> {
     );
   }
 
-  showImageChoices(BuildContext context, PostsViewModel viewModel) {
+  Widget buildCardInput({
+    required IconData icon,
+    TextEditingController? controller,
+    String? initialValue,
+    String? hint,
+    bool readOnly = false,
+    int? maxLines = 1,
+    Widget? suffixIcon,
+    Function()? onTap,
+    Function(String)? onChanged,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(12.0),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: TextFormField(
+        controller: controller,
+        initialValue: controller == null ? initialValue : null,
+        readOnly: readOnly,
+        maxLines: maxLines,
+        onTap: onTap,
+        onChanged: onChanged,
+        decoration: InputDecoration(
+          icon: Icon(icon),
+          hintText: hint,
+          border: InputBorder.none,
+          suffixIcon: suffixIcon,
+        ),
+      ),
+    );
+  }
+
+  void showImageChoices(BuildContext context, PostsViewModel viewModel) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .6,
+          heightFactor: .5,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              const SizedBox(height: 20.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   'Select Image',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              Divider(),
+              const Divider(),
               ListTile(
                 leading: Icon(Ionicons.camera_outline),
                 title: Text('Camera'),
@@ -221,7 +270,7 @@ class _CreatePostState extends State<CreatePost> {
                 },
               ),
               ListTile(
-                leading: Icon(Ionicons.image),
+                leading: Icon(Ionicons.image_outline),
                 title: Text('Gallery'),
                 onTap: () {
                   Navigator.pop(context);

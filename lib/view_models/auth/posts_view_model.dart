@@ -42,8 +42,16 @@ class PostsViewModel extends ChangeNotifier {
   bool edit = false;
   String? id;
 
+  // New Post Details
+  String? date;
+  String? time;
+  String? gathering;
+
   // Controllers
   TextEditingController locationTEC = TextEditingController();
+  TextEditingController dateTEC = TextEditingController();
+  TextEditingController timeTEC = TextEditingController();
+  TextEditingController gatheringTEC = TextEditingController();
 
   // Setters
   setEdit(bool val) {
@@ -56,7 +64,7 @@ class PostsViewModel extends ChangeNotifier {
     imgLink = post.mediaUrl;
     location = post.location;
     edit = true;
-    edit = false; // Confirm your logic here if needed
+    edit = false;
     notifyListeners();
   }
 
@@ -84,6 +92,24 @@ class PostsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  setDate(String val) {
+    print('SetDate $val');
+    date = val;
+    notifyListeners();
+  }
+
+  setTime(String val) {
+    print('SetTime $val');
+    time = val;
+    notifyListeners();
+  }
+
+  setGathering(String val) {
+    print('SetGathering $val');
+    gathering = val;
+    notifyListeners();
+  }
+
   // Functions
   pickImage({bool camera = false, BuildContext? context}) async {
     loading = true;
@@ -100,7 +126,6 @@ class PostsViewModel extends ChangeNotifier {
       }
       CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: pickedFile.path,
-        // Use a fixed aspect ratio or remove to allow free crop
         aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
         uiSettings: [
           AndroidUiSettings(
@@ -132,11 +157,9 @@ class PostsViewModel extends ChangeNotifier {
     loading = true;
     notifyListeners();
     LocationPermission permission = await Geolocator.checkPermission();
-    print(permission);
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
-      LocationPermission rPermission = await Geolocator.requestPermission();
-      print(rPermission);
+      await Geolocator.requestPermission();
       await getLocation();
     } else {
       position = await Geolocator.getCurrentPosition(
@@ -147,9 +170,8 @@ class PostsViewModel extends ChangeNotifier {
         position!.longitude,
       );
       placemark = placemarks[0];
-      location = " ${placemarks[0].locality}, ${placemarks[0].country}";
+      location = "${placemarks[0].locality}, ${placemarks[0].country}";
       locationTEC.text = location!;
-      print(location);
     }
     loading = false;
     notifyListeners();
@@ -159,7 +181,14 @@ class PostsViewModel extends ChangeNotifier {
     try {
       loading = true;
       notifyListeners();
-      await postService.uploadPost(mediaUrl!, location!, description!);
+      await postService.uploadPost(
+        mediaUrl!,
+        location ?? '',
+        description ?? '',
+        date ?? '',
+        time ?? '',
+        gathering ?? '',
+      );
       loading = false;
       resetPost();
       notifyListeners();
@@ -202,6 +231,15 @@ class PostsViewModel extends ChangeNotifier {
     mediaUrl = null;
     description = null;
     location = null;
+    date = null;
+    time = null;
+    gathering = null;
+
+    locationTEC.clear();
+    dateTEC.clear();
+    timeTEC.clear();
+    gatheringTEC.clear();
+
     edit = false;
     notifyListeners();
   }

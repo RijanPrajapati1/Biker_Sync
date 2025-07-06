@@ -19,7 +19,14 @@ class PostService extends Service {
   }
 
   //uploads post to the post collection
-  uploadPost(File image, String location, String description) async {
+  uploadPost(
+    File image,
+    String location,
+    String description,
+    String date,
+    String time,
+    String gathering,
+  ) async {
     String link = await uploadImage(posts, image);
     DocumentSnapshot doc =
         await usersRef.doc(firebaseAuth.currentUser!.uid).get();
@@ -32,9 +39,12 @@ class PostService extends Service {
           "username": user!.username,
           "ownerId": firebaseAuth.currentUser!.uid,
           "mediaUrl": link,
-          "description": description ?? "",
-          "location": location ?? "Wooble",
+          "description": description.isNotEmpty ? description : "",
+          "location": location.isNotEmpty ? location : "Wooble",
           "timestamp": Timestamp.now(),
+          "date": date,
+          "time": time,
+          "gathering": gathering,
         })
         .catchError((e) {
           print(e);

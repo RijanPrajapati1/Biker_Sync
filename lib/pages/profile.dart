@@ -45,11 +45,12 @@ class _ProfileState extends State<Profile> {
   }
 
   checkIfFollowing() async {
-    DocumentSnapshot doc = await followersRef
-        .doc(widget.profileId)
-        .collection('userFollowers')
-        .doc(currentUserId())
-        .get();
+    DocumentSnapshot doc =
+        await followersRef
+            .doc(widget.profileId)
+            .collection('userFollowers')
+            .doc(currentUserId())
+            .get();
     setState(() {
       isFollowing = doc.exists;
     });
@@ -60,32 +61,30 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('WOOBLE'),
+        title: Text('Biker Sync'),
         actions: [
           widget.profileId == firebaseAuth.currentUser!.uid
               ? Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 25.0),
-                    child: GestureDetector(
-                      onTap: () async {
-                        await firebaseAuth.signOut();
-                        Navigator.of(context).push(
-                          CupertinoPageRoute(
-                            builder: (_) => Register(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'Log Out',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 15.0,
-                        ),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 25.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      await firebaseAuth.signOut();
+                      Navigator.of(
+                        context,
+                      ).push(CupertinoPageRoute(builder: (_) => Register()));
+                    },
+                    child: Text(
+                      'Log Out',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 15.0,
                       ),
                     ),
                   ),
-                )
-              : SizedBox()
+                ),
+              )
+              : SizedBox(),
         ],
       ),
       body: CustomScrollView(
@@ -113,30 +112,32 @@ class _ProfileState extends State<Profile> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 20.0),
-                              child: user.photoUrl!.isEmpty
-                                  ? CircleAvatar(
-                                      radius: 40.0,
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                      child: Center(
-                                        child: Text(
-                                          '${user.username![0].toUpperCase()}',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w900,
+                              child:
+                                  user.photoUrl!.isEmpty
+                                      ? CircleAvatar(
+                                        radius: 40.0,
+                                        backgroundColor:
+                                            Theme.of(
+                                              context,
+                                            ).colorScheme.secondary,
+                                        child: Center(
+                                          child: Text(
+                                            '${user.username![0].toUpperCase()}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w900,
+                                            ),
                                           ),
                                         ),
+                                      )
+                                      : CircleAvatar(
+                                        radius: 40.0,
+                                        backgroundImage:
+                                            CachedNetworkImageProvider(
+                                              '${user.photoUrl}',
+                                            ),
                                       ),
-                                    )
-                                  : CircleAvatar(
-                                      radius: 40.0,
-                                      backgroundImage:
-                                          CachedNetworkImageProvider(
-                                        '${user.photoUrl}',
-                                      ),
-                                    ),
                             ),
                             SizedBox(width: 20.0),
                             Column(
@@ -184,9 +185,7 @@ class _ProfileState extends State<Profile> {
                                           children: [
                                             Text(
                                               user.email!,
-                                              style: TextStyle(
-                                                fontSize: 10.0,
-                                              ),
+                                              style: TextStyle(fontSize: 10.0),
                                             ),
                                           ],
                                         ),
@@ -194,31 +193,32 @@ class _ProfileState extends State<Profile> {
                                     ),
                                     widget.profileId == currentUserId()
                                         ? InkWell(
-                                            onTap: () {
-                                              Navigator.of(context).push(
-                                                CupertinoPageRoute(
-                                                  builder: (_) => Setting(),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                              CupertinoPageRoute(
+                                                builder: (_) => Setting(),
+                                              ),
+                                            );
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Icon(
+                                                Ionicons.settings_outline,
+                                                color:
+                                                    Theme.of(
+                                                      context,
+                                                    ).colorScheme.secondary,
+                                              ),
+                                              Text(
+                                                'settings',
+                                                style: TextStyle(
+                                                  fontSize: 11.5,
                                                 ),
-                                              );
-                                            },
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Ionicons.settings_outline,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                ),
-                                                Text(
-                                                  'settings',
-                                                  style: TextStyle(
-                                                    fontSize: 11.5,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          )
-                                        : const Text('')
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                        : const Text(''),
                                     // : buildLikeButton()
                                   ],
                                 ),
@@ -228,42 +228,51 @@ class _ProfileState extends State<Profile> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10.0, left: 20.0),
-                          child: user.bio!.isEmpty
-                              ? Container()
-                              : Container(
-                                  width: 200,
-                                  child: Text(
-                                    user.bio!,
-                                    style: TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
+                          child:
+                              user.bio!.isEmpty
+                                  ? Container()
+                                  : Container(
+                                    width: 200,
+                                    child: Text(
+                                      user.bio!,
+                                      style: TextStyle(
+                                        fontSize: 10.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      maxLines: null,
                                     ),
-                                    maxLines: null,
                                   ),
-                                ),
                         ),
                         SizedBox(height: 10.0),
                         Container(
                           height: 50.0,
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 30.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 30.0,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 StreamBuilder(
-                                  stream: postRef
-                                      .where('ownerId',
-                                          isEqualTo: widget.profileId)
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream:
+                                      postRef
+                                          .where(
+                                            'ownerId',
+                                            isEqualTo: widget.profileId,
+                                          )
+                                          .snapshots(),
+                                  builder: (
+                                    context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot,
+                                  ) {
                                     if (snapshot.hasData) {
                                       QuerySnapshot<Object?>? snap =
                                           snapshot.data;
                                       List<DocumentSnapshot> docs = snap!.docs;
                                       return buildCount(
-                                          "POSTS", docs.length ?? 0);
+                                        "POSTS",
+                                        docs.length ?? 0,
+                                      );
                                     } else {
                                       return buildCount("POSTS", 0);
                                     }
@@ -278,18 +287,23 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                                 StreamBuilder(
-                                  stream: followersRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowers')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream:
+                                      followersRef
+                                          .doc(widget.profileId)
+                                          .collection('userFollowers')
+                                          .snapshots(),
+                                  builder: (
+                                    context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot,
+                                  ) {
                                     if (snapshot.hasData) {
                                       QuerySnapshot<Object?>? snap =
                                           snapshot.data;
                                       List<DocumentSnapshot> docs = snap!.docs;
                                       return buildCount(
-                                          "FOLLOWERS", docs.length ?? 0);
+                                        "FOLLOWERS",
+                                        docs.length ?? 0,
+                                      );
                                     } else {
                                       return buildCount("FOLLOWERS", 0);
                                     }
@@ -304,18 +318,23 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                                 StreamBuilder(
-                                  stream: followingRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowing')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  stream:
+                                      followingRef
+                                          .doc(widget.profileId)
+                                          .collection('userFollowing')
+                                          .snapshots(),
+                                  builder: (
+                                    context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot,
+                                  ) {
                                     if (snapshot.hasData) {
                                       QuerySnapshot<Object?>? snap =
                                           snapshot.data;
                                       List<DocumentSnapshot> docs = snap!.docs;
                                       return buildCount(
-                                          "FOLLOWING", docs.length ?? 0);
+                                        "FOLLOWING",
+                                        docs.length ?? 0,
+                                      );
                                     } else {
                                       return buildCount("FOLLOWING", 0);
                                     }
@@ -335,48 +354,50 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                if (index > 0) return null;
-                return Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'All Posts',
-                            style: TextStyle(fontWeight: FontWeight.w900),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () async {
-                              DocumentSnapshot doc =
-                                  await usersRef.doc(widget.profileId).get();
-                              var currentUser = UserModel.fromJson(
-                                doc.data() as Map<String, dynamic>,
-                              );
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (_) => ListPosts(
-                                    userId: widget.profileId,
-                                    username: currentUser.username,
-                                  ),
-                                ),
-                              );
-                            },
-                            icon: Icon(Ionicons.grid_outline),
-                          )
-                        ],
-                      ),
+            delegate: SliverChildBuilderDelegate((
+              BuildContext context,
+              int index,
+            ) {
+              if (index > 0) return null;
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          'All Posts',
+                          style: TextStyle(fontWeight: FontWeight.w900),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () async {
+                            DocumentSnapshot doc =
+                                await usersRef.doc(widget.profileId).get();
+                            var currentUser = UserModel.fromJson(
+                              doc.data() as Map<String, dynamic>,
+                            );
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder:
+                                    (_) => ListPosts(
+                                      userId: widget.profileId,
+                                      username: currentUser.username,
+                                    ),
+                              ),
+                            );
+                          },
+                          icon: Icon(Ionicons.grid_outline),
+                        ),
+                      ],
                     ),
-                    buildPostView()
-                  ],
-                );
-              },
-            ),
-          )
+                  ),
+                  buildPostView(),
+                ],
+              );
+            }),
+          ),
         ],
       ),
     );
@@ -401,7 +422,7 @@ class _ProfileState extends State<Profile> {
             fontWeight: FontWeight.w400,
             fontFamily: 'Ubuntu-Regular',
           ),
-        )
+        ),
       ],
     );
   }
@@ -411,28 +432,19 @@ class _ProfileState extends State<Profile> {
     bool isMe = widget.profileId == firebaseAuth.currentUser!.uid;
     if (isMe) {
       return buildButton(
-          text: "Edit Profile",
-          function: () {
-            Navigator.of(context).push(
-              CupertinoPageRoute(
-                builder: (_) => EditProfile(
-                  user: user,
-                ),
-              ),
-            );
-          });
+        text: "Edit Profile",
+        function: () {
+          Navigator.of(
+            context,
+          ).push(CupertinoPageRoute(builder: (_) => EditProfile(user: user)));
+        },
+      );
       //if you are already following the user then "unfollow"
     } else if (isFollowing) {
-      return buildButton(
-        text: "Unfollow",
-        function: handleUnfollow,
-      );
+      return buildButton(text: "Unfollow", function: handleUnfollow);
       //if you are not following the user then "follow"
     } else if (!isFollowing) {
-      return buildButton(
-        text: "Follow",
-        function: handleFollow,
-      );
+      return buildButton(text: "Follow", function: handleFollow);
     }
   }
 
@@ -455,10 +467,7 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           child: Center(
-            child: Text(
-              text!,
-              style: TextStyle(color: Colors.white),
-            ),
+            child: Text(text!, style: TextStyle(color: Colors.white)),
           ),
         ),
       ),
@@ -478,10 +487,10 @@ class _ProfileState extends State<Profile> {
         .doc(currentUserId())
         .get()
         .then((doc) {
-      if (doc.exists) {
-        doc.reference.delete();
-      }
-    });
+          if (doc.exists) {
+            doc.reference.delete();
+          }
+        });
     //remove following
     followingRef
         .doc(currentUserId())
@@ -489,10 +498,10 @@ class _ProfileState extends State<Profile> {
         .doc(widget.profileId)
         .get()
         .then((doc) {
-      if (doc.exists) {
-        doc.reference.delete();
-      }
-    });
+          if (doc.exists) {
+            doc.reference.delete();
+          }
+        });
     //remove from notifications feeds
     notificationRef
         .doc(widget.profileId)
@@ -500,10 +509,10 @@ class _ProfileState extends State<Profile> {
         .doc(currentUserId())
         .get()
         .then((doc) {
-      if (doc.exists) {
-        doc.reference.delete();
-      }
-    });
+          if (doc.exists) {
+            doc.reference.delete();
+          }
+        });
   }
 
   handleFollow() async {
@@ -530,13 +539,13 @@ class _ProfileState extends State<Profile> {
         .collection('notifications')
         .doc(currentUserId())
         .set({
-      "type": "follow",
-      "ownerId": widget.profileId,
-      "username": users?.username,
-      "userId": users?.id,
-      "userDp": users?.photoUrl,
-      "timestamp": timestamp,
-    });
+          "type": "follow",
+          "ownerId": widget.profileId,
+          "username": users?.username,
+          "userId": users?.id,
+          "userDp": users?.photoUrl,
+          "timestamp": timestamp,
+        });
   }
 
   buildPostView() {
@@ -547,27 +556,28 @@ class _ProfileState extends State<Profile> {
     return StreamGridWrapper(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      stream: postRef
-          .where('ownerId', isEqualTo: widget.profileId)
-          .orderBy('timestamp', descending: true)
-          .snapshots(),
+      stream:
+          postRef
+              .where('ownerId', isEqualTo: widget.profileId)
+              .orderBy('timestamp', descending: true)
+              .snapshots(),
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (_, DocumentSnapshot snapshot) {
-        PostModel posts =
-            PostModel.fromJson(snapshot.data() as Map<String, dynamic>);
-        return PostTile(
-          post: posts,
+        PostModel posts = PostModel.fromJson(
+          snapshot.data() as Map<String, dynamic>,
         );
+        return PostTile(post: posts);
       },
     );
   }
 
   buildLikeButton() {
     return StreamBuilder(
-      stream: favUsersRef
-          .where('postId', isEqualTo: widget.profileId)
-          .where('userId', isEqualTo: currentUserId())
-          .snapshots(),
+      stream:
+          favUsersRef
+              .where('postId', isEqualTo: widget.profileId)
+              .where('userId', isEqualTo: currentUserId())
+              .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           List<QueryDocumentSnapshot> docs = snapshot.data?.docs ?? [];
@@ -590,7 +600,7 @@ class _ProfileState extends State<Profile> {
                     color: Colors.grey.withOpacity(0.2),
                     spreadRadius: 3.0,
                     blurRadius: 5.0,
-                  )
+                  ),
                 ],
                 color: Colors.white,
                 shape: BoxShape.circle,
