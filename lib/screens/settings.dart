@@ -21,10 +21,7 @@ class _SettingState extends State<Setting> {
         ),
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.0,
-        title: Text(
-          "Settings",
-          style: TextStyle(),
-        ),
+        title: Text("Settings", style: TextStyle()),
       ),
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Padding(
@@ -32,33 +29,31 @@ class _SettingState extends State<Setting> {
         child: ListView(
           children: <Widget>[
             ListTile(
-                title: Text(
-                  "About",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                subtitle: Text(
-                  "A Fully Functional Social Media Application Made by CharlyKeleb",
-                ),
-                trailing: Icon(Icons.error)),
+              title: Text(
+                "About",
+                style: TextStyle(fontWeight: FontWeight.w900),
+              ),
+              subtitle: Text(
+                "A Fully Functional Biker App Made by Rijan Prajapati",
+              ),
+              trailing: Icon(Icons.error),
+            ),
             Divider(),
             ListTile(
               title: Text(
                 "Dark Mode",
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w900),
               ),
               subtitle: Text("Use the dark mode"),
               trailing: Consumer<ThemeProvider>(
-                builder: (context, notifier, child) => CupertinoSwitch(
-                  onChanged: (val) {
-                    notifier.toggleTheme();
-                  },
-                  value: notifier.dark,
-                  activeTrackColor: Theme.of(context).colorScheme.secondary,
-                ),
+                builder:
+                    (context, notifier, child) => CupertinoSwitch(
+                      onChanged: (val) {
+                        notifier.toggleTheme();
+                      },
+                      value: notifier.dark,
+                      activeTrackColor: Theme.of(context).colorScheme.secondary,
+                    ),
               ),
             ),
           ],

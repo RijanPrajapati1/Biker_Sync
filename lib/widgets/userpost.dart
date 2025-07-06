@@ -77,39 +77,58 @@ class UserPost extends StatelessWidget {
                             children: [
                               buildLikeButton(),
                               SizedBox(width: 5.0),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(10.0),
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    CupertinoPageRoute(
-                                      builder: (_) => Comments(post: post),
-                                    ),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      CupertinoIcons.chat_bubble,
-                                      size: 25.0,
-                                    ),
-                                    const SizedBox(width: 6),
-                                    if (post?.date != null &&
-                                        post!.date!.isNotEmpty)
-                                      _infoChip(
-                                        Icons.calendar_today,
-                                        post!.date!,
+                              Expanded(
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                        builder: (_) => Comments(post: post),
                                       ),
-                                    if (post?.time != null &&
-                                        post!.time!.isNotEmpty) ...[
+                                    );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.chat_bubble,
+                                        size: 25.0,
+                                      ),
                                       const SizedBox(width: 6),
-                                      _infoChip(Icons.access_time, post!.time!),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            children: [
+                                              if (post?.date != null &&
+                                                  post!.date!.isNotEmpty)
+                                                _infoChip(
+                                                  Icons.calendar_today,
+                                                  post!.date!,
+                                                ),
+                                              if (post?.time != null &&
+                                                  post!.time!.isNotEmpty) ...[
+                                                const SizedBox(width: 6),
+                                                _infoChip(
+                                                  Icons.access_time,
+                                                  post!.time!,
+                                                ),
+                                              ],
+                                              if (post?.gathering != null &&
+                                                  post!
+                                                      .gathering!
+                                                      .isNotEmpty) ...[
+                                                const SizedBox(width: 6),
+                                                _infoChip(
+                                                  Icons.group,
+                                                  post!.gathering!,
+                                                ),
+                                              ],
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ],
-                                    if (post?.gathering != null &&
-                                        post!.gathering!.isNotEmpty) ...[
-                                      const SizedBox(width: 6),
-                                      _infoChip(Icons.group, post!.gathering!),
-                                    ],
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -140,7 +159,7 @@ class UserPost extends StatelessWidget {
                                       List<DocumentSnapshot> docs = snap.docs;
                                       return buildLikesCount(
                                         context,
-                                        docs.length ?? 0,
+                                        docs.length,
                                       );
                                     } else {
                                       return buildLikesCount(context, 0);
@@ -165,7 +184,7 @@ class UserPost extends StatelessWidget {
                                   List<DocumentSnapshot> docs = snap.docs;
                                   return buildCommentsCount(
                                     context,
-                                    docs.length ?? 0,
+                                    docs.length,
                                   );
                                 } else {
                                   return buildCommentsCount(context, 0);
@@ -182,12 +201,9 @@ class UserPost extends StatelessWidget {
                             padding: const EdgeInsets.only(left: 5.0, top: 3.0),
                             child: Text(
                               '${post?.description ?? ""}',
-                              style: TextStyle(
-                                // color:
-                                //     Theme.of(context).textTheme.caption!.color,
-                                // fontSize: 15.0,
-                              ),
-                              maxLines: 2,
+                              style: TextStyle(),
+                              maxLines: 5,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
@@ -199,7 +215,6 @@ class UserPost extends StatelessWidget {
                             style: TextStyle(fontSize: 10.0),
                           ),
                         ),
-                        // SizedBox(height: 5.0),
                       ],
                     ),
                   ),

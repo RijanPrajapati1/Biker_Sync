@@ -27,24 +27,19 @@ class _LoginState extends State<Login> {
         backgroundColor: Colors.white,
         key: viewModel.scaffoldKey,
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
           children: [
-            SizedBox(height: MediaQuery.of(context).size.height / 5),
+            SizedBox(height: MediaQuery.of(context).size.height / 8),
             Container(
               height: 170.0,
               width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                'assets/images/login.png',
-              ),
+              child: Image.asset('assets/images/login.png'),
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 20.0),
             Center(
               child: Text(
                 'Welcome back!',
-                style: TextStyle(
-                  fontSize: 23.0,
-                  fontWeight: FontWeight.w900,
-                ),
+                style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.w900),
               ),
             ),
             Center(
@@ -57,9 +52,9 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 30.0),
             buildForm(context, viewModel),
-            SizedBox(height: 10.0),
+            SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -67,11 +62,9 @@ class _LoginState extends State<Login> {
                 SizedBox(width: 5.0),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                      CupertinoPageRoute(
-                        builder: (_) => Register(),
-                      ),
-                    );
+                    Navigator.of(
+                      context,
+                    ).push(CupertinoPageRoute(builder: (_) => Register()));
                   },
                   child: Text(
                     'Sign Up',
@@ -89,38 +82,60 @@ class _LoginState extends State<Login> {
     );
   }
 
-  buildForm(BuildContext context, LoginViewModel viewModel) {
+  Widget buildForm(BuildContext context, LoginViewModel viewModel) {
     return Form(
       key: viewModel.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       child: Column(
         children: [
-          TextFormBuilder(
-            enabled: !viewModel.loading,
-            prefix: Ionicons.mail_outline,
-            hintText: "Email",
-            textInputAction: TextInputAction.next,
-            validateFunction: Validations.validateEmail,
-            onSaved: (String val) {
-              viewModel.setEmail(val);
-            },
-            focusNode: viewModel.emailFN,
-            nextFocusNode: viewModel.passFN,
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: TextFormBuilder(
+              enabled: !viewModel.loading,
+              prefix: Ionicons.mail_outline,
+              hintText: "Email",
+              textInputAction: TextInputAction.next,
+              validateFunction: Validations.validateEmail,
+              onSaved: (String val) => viewModel.setEmail(val),
+              focusNode: viewModel.emailFN,
+              nextFocusNode: viewModel.passFN,
+            ),
           ),
-          SizedBox(height: 15.0),
-          PasswordFormBuilder(
-            enabled: !viewModel.loading,
-            prefix: Ionicons.lock_closed_outline,
-            suffix: Ionicons.eye_outline,
-            hintText: "Password",
-            textInputAction: TextInputAction.done,
-            validateFunction: Validations.validatePassword,
-            submitAction: () => viewModel.login(context),
-            obscureText: true,
-            onSaved: (String val) {
-              viewModel.setPassword(val);
-            },
-            focusNode: viewModel.passFN,
+          SizedBox(height: 20.0),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: PasswordFormBuilder(
+              enabled: !viewModel.loading,
+              prefix: Ionicons.lock_closed_outline,
+              suffix: Ionicons.eye_outline,
+              hintText: "Password",
+              textInputAction: TextInputAction.done,
+              validateFunction: Validations.validatePassword,
+              submitAction: () => viewModel.login(context),
+              obscureText: true,
+              onSaved: (String val) => viewModel.setPassword(val),
+              focusNode: viewModel.passFN,
+            ),
           ),
           Align(
             alignment: Alignment.centerRight,
@@ -135,31 +150,28 @@ class _LoginState extends State<Login> {
                     alignment: Alignment.centerRight,
                     child: Text(
                       'Forgot Password?',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 10.0),
+          SizedBox(height: 25.0),
           Container(
             height: 45.0,
             width: 180.0,
             child: ElevatedButton(
               style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.0),
                   ),
                 ),
-                backgroundColor: MaterialStateProperty.all<Color>(
+                backgroundColor: WidgetStateProperty.all<Color>(
                   Theme.of(context).colorScheme.secondary,
                 ),
               ),
-              // highlightElevation: 4.0,
               child: Text(
                 'Log in'.toUpperCase(),
                 style: TextStyle(
