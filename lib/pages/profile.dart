@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:social_media_app/auth/register/register.dart';
+import 'package:social_media_app/auth/login/login.dart';
 import 'package:social_media_app/components/stream_grid_wrapper.dart';
 import 'package:social_media_app/models/post.dart';
 import 'package:social_media_app/models/user.dart';
@@ -72,7 +72,7 @@ class _ProfileState extends State<Profile> {
                       await firebaseAuth.signOut();
                       Navigator.of(
                         context,
-                      ).push(CupertinoPageRoute(builder: (_) => Register()));
+                      ).push(CupertinoPageRoute(builder: (_) => Login()));
                     },
                     child: Text(
                       'Log Out',
