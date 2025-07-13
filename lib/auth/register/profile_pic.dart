@@ -40,44 +40,44 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   height: MediaQuery.of(context).size.width - 30,
                   decoration: BoxDecoration(
                     color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(3.0),
-                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(3.0)),
                     border: Border.all(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
-                  child: viewModel.imgLink != null
-                      ? CustomImage(
-                          imageUrl: viewModel.imgLink,
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.width - 30,
-                          fit: BoxFit.cover,
-                        )
-                      : viewModel.mediaUrl == null
+                  child:
+                      viewModel.imgLink != null
+                          ? CustomImage(
+                            imageUrl: viewModel.imgLink,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width - 30,
+                            fit: BoxFit.cover,
+                          )
+                          : viewModel.mediaUrl == null
                           ? Center(
-                              child: Text(
-                                'Tap to add your profile picture',
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.secondary,
-                                ),
+                            child: Text(
+                              'Tap to add your profile picture',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
-                            )
-                          : Image.file(
-                              viewModel.mediaUrl!,
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.width - 30,
-                              fit: BoxFit.cover,
                             ),
+                          )
+                          : Image.file(
+                            viewModel.mediaUrl!,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.width - 30,
+                            fit: BoxFit.cover,
+                          ),
                 ),
               ),
               SizedBox(height: 10.0),
               Center(
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        Theme.of(context).colorScheme.secondary),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                      Theme.of(context).colorScheme.secondary,
+                    ),
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
                       ),
@@ -86,7 +86,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Center(
-                      child: Text('done'.toUpperCase()),
+                      child: Text('done'.toUpperCase()), //text can be white
                     ),
                   ),
                   onPressed: () => viewModel.uploadProfilePicture(context),
@@ -102,9 +102,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
   showImageChoices(BuildContext context, PostsViewModel viewModel) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       builder: (BuildContext context) {
         return FractionallySizedBox(
           heightFactor: .6,
@@ -116,9 +114,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Text(
                   'Select from'.toUpperCase(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
               Divider(),
