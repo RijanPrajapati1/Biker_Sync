@@ -21,7 +21,7 @@ class LoginViewModel extends ChangeNotifier {
     if (!form.validate()) {
       validate = true;
       notifyListeners();
-      showInSnackBar('Please fix the errors in red before submitting.',context);
+      showInSnackBar('Please fix all the errors in red before submitting.',context);
     } else {
       loading = true;
       notifyListeners();
