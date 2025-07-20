@@ -58,7 +58,7 @@ class LoginViewModel extends ChangeNotifier {
       try {
         await auth.forgotPassword(email!);
         showInSnackBar('Please check your email for instructions '
-            'to reset your password', context);
+            'to reset your password.', context);
       } catch (e) {
         showInSnackBar('${e.toString()}', context);
       }
