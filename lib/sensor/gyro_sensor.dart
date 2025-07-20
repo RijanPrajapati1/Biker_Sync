@@ -12,7 +12,7 @@ class GyroscopeTiltView extends StatefulWidget {
   const GyroscopeTiltView({
     super.key,
     required this.child,
-    this.maxTiltAngle = 15.0,
+    this.maxTiltAngle = 19.0,
     this.sensitivity = 1.5,
   });
 
@@ -30,7 +30,6 @@ class _GyroscopeTiltViewState extends State<GyroscopeTiltView> {
     super.initState();
     _gyroscopeSubscription = gyroscopeEvents.listen((GyroscopeEvent event) {
       setState(() {
-        // Limit the rotation angles to prevent extreme tilting
         _rotationX = (_rotationX + event.y * widget.sensitivity).clamp(
           -widget.maxTiltAngle,
           widget.maxTiltAngle,
@@ -55,7 +54,7 @@ class _GyroscopeTiltViewState extends State<GyroscopeTiltView> {
       alignment: Alignment.center,
       transform:
           Matrix4.identity()
-            ..setEntry(3, 2, 0.001) // perspective
+            ..setEntry(3, 2, 0.001)
             ..rotateX(_rotationX * math.pi / 180)
             ..rotateY(_rotationY * math.pi / 180),
       child: widget.child,
