@@ -85,9 +85,7 @@ class _ProfilePictureState extends State<ProfilePicture> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Center(
-                      child: Text('done'.toUpperCase()), //text can be white
-                    ),
+                    child: Center(child: Text('done'.toUpperCase())),
                   ),
                   onPressed: () => viewModel.uploadProfilePicture(context),
                 ),
