@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
       progressIndicator: circularProgress(context),
       isLoading: viewModel.loading,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 255, 251, 251),
         key: viewModel.scaffoldKey,
         body: ListView(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
