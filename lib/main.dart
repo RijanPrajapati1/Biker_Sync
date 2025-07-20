@@ -71,6 +71,7 @@ import 'package:provider/provider.dart';
 import 'package:social_media_app/components/life_cycle_event_handler.dart';
 import 'package:social_media_app/landing/landing_page.dart';
 import 'package:social_media_app/screens/mainscreen.dart';
+import 'package:social_media_app/sensor/gyro_sensor.dart';
 import 'package:social_media_app/services/user_service.dart';
 import 'package:social_media_app/utils/config.dart';
 import 'package:social_media_app/utils/constants.dart';
@@ -114,12 +115,11 @@ class _MyAppState extends State<MyApp> {
             ),
             home: StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
-              builder: ((BuildContext context, snapshot) {
-                if (snapshot.hasData) {
-                  return TabScreen();
-                } else
-                  return Landing();
-              }),
+              builder: (BuildContext context, snapshot) {
+                return GyroscopeTiltView(
+                  child: snapshot.hasData ? TabScreen() : Landing(),
+                );
+              },
             ),
           );
         },

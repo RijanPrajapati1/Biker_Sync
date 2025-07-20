@@ -58,6 +58,7 @@ dependencies:
   ionicons: ^0.2.2
   loading_overlay: ^0.4.2
   like_button: ^2.1.0
+  sensors_plus: ^6.1.1
 
   flutter_chat_bubble: ^2.0.0
   permission_handler: ^12.0.0+1
