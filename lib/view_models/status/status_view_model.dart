@@ -62,7 +62,7 @@ class StatusViewModel extends ChangeNotifier {
 
       CroppedFile? croppedFile = await ImageCropper().cropImage(
         sourcePath: pickedFile.path,
-        // For fixed ratio cropping; remove to allow free cropping
+
         aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
         uiSettings: [
           AndroidUiSettings(
@@ -98,12 +98,10 @@ class StatusViewModel extends ChangeNotifier {
     }
   }
 
-  // Send status message
   sendStatus(String chatId, StatusModel message) {
     statusService.sendStatus(message, chatId);
   }
 
-  // Send the first status message
   Future<String> sendFirstStatus(StatusModel message) async {
     String newChatId = await statusService.sendFirstStatus(message);
 
