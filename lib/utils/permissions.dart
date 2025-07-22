@@ -1,5 +1,5 @@
-import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Permissions {
   static Future<bool> cameraMicrophoneAndStoragePermissionGranted() async {
@@ -13,8 +13,11 @@ class Permissions {
         storagePermissionStatus == PermissionStatus.granted) {
       return true;
     } else {
-      _handleInvalidPermission(cameraPermissionStatus,
-          microphonePermissionStatus, storagePermissionStatus);
+      _handleInvalidPermission(
+        cameraPermissionStatus,
+        microphonePermissionStatus,
+        storagePermissionStatus,
+      );
       return false;
     }
   }
@@ -56,9 +59,11 @@ class Permissions {
   }
 
   static void _handleInvalidPermission(
-      PermissionStatus cameraPermissionStatus,
-      PermissionStatus microphonePermissionStatus,
-      PermissionStatus storagePermissionStatus) {
+    PermissionStatus cameraPermissionStatus,
+    PermissionStatus microphonePermissionStatus,
+    PermissionStatus storagePermissionStatus,
+  ) {
+    //this shows acces too application
     if (cameraPermissionStatus == PermissionStatus.denied &&
         microphonePermissionStatus == PermissionStatus.denied) {
       throw new PlatformException(
