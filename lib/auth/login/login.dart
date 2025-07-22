@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
             Center(
               child: Text(
                 'Welcome back!',
-                style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.w900),
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w900),
               ),
             ),
             Center(
