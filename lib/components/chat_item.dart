@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/chats/conversation.dart';
-import 'package:social_media_app/components/text_time.dart';
 import 'package:social_media_app/models/enum/message_type.dart';
 import 'package:social_media_app/models/user.dart';
 import 'package:social_media_app/utils/firebase.dart';
@@ -41,32 +40,33 @@ class ChatItem extends StatelessWidget {
             documentSnapshot.data() as Map<String, dynamic>,
           );
           return ListTile(
-            contentPadding:
-                EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 5.0,
+            ),
             leading: Stack(
               children: <Widget>[
                 user.photoUrl == null || user.photoUrl!.isEmpty
                     ? CircleAvatar(
-                        radius: 25.0,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.secondary,
-                        child: Center(
-                          child: Text(
-                            '${user.username![0].toUpperCase()}',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w900,
-                            ),
+                      radius: 25.0,
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      child: Center(
+                        child: Text(
+                          '${user.username![0].toUpperCase()}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w900,
                           ),
                         ),
-                      )
-                    : CircleAvatar(
-                        radius: 25.0,
-                        backgroundImage: CachedNetworkImageProvider(
-                          '${user.photoUrl}',
-                        ),
                       ),
+                    )
+                    : CircleAvatar(
+                      radius: 25.0,
+                      backgroundImage: CachedNetworkImageProvider(
+                        '${user.photoUrl}',
+                      ),
+                    ),
                 Positioned(
                   bottom: 0.0,
                   right: 0.0,
@@ -80,9 +80,10 @@ class ChatItem extends StatelessWidget {
                     child: Center(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: user.isOnline ?? false
-                              ? Color(0xff00d72f)
-                              : Colors.grey,
+                          color:
+                              user.isOnline ?? false
+                                  ? Color(0xff00d72f)
+                                  : Colors.grey,
                           borderRadius: BorderRadius.circular(6),
                         ),
                         height: 11,
@@ -96,9 +97,7 @@ class ChatItem extends StatelessWidget {
             title: Text(
               '${user.username}',
               maxLines: 1,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
               type == MessageType.IMAGE ? "IMAGE" : "$msg",
@@ -111,10 +110,7 @@ class ChatItem extends StatelessWidget {
                 SizedBox(height: 10),
                 Text(
                   "${timeago.format(time!.toDate())}",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 11,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.w300, fontSize: 11),
                 ),
                 SizedBox(height: 5),
                 buildCounter(context),
@@ -124,10 +120,7 @@ class ChatItem extends StatelessWidget {
               Navigator.of(context, rootNavigator: true).push(
                 CupertinoPageRoute(
                   builder: (BuildContext context) {
-                    return Conversation(
-                      userId: userId!,
-                      chatId: chatId!,
-                    );
+                    return Conversation(userId: userId!, chatId: chatId!);
                   },
                 ),
               );
@@ -159,18 +152,12 @@ class ChatItem extends StatelessWidget {
                 color: Theme.of(context).colorScheme.secondary,
                 borderRadius: BorderRadius.circular(6),
               ),
-              constraints: BoxConstraints(
-                minWidth: 11,
-                minHeight: 11,
-              ),
+              constraints: BoxConstraints(minWidth: 11, minHeight: 11),
               child: Padding(
                 padding: EdgeInsets.only(top: 1, left: 5, right: 5),
                 child: Text(
                   "$counter",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 10),
                   textAlign: TextAlign.center,
                 ),
               ),
