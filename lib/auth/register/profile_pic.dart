@@ -130,7 +130,6 @@ class _ProfilePictureState extends State<ProfilePicture> {
                 onTap: () {
                   Navigator.pop(context);
                   viewModel.pickImage();
-                  // viewModel.pickProfilePicture();
                 },
               ),
             ],
