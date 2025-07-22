@@ -12,6 +12,7 @@ import 'package:social_media_app/utils/constants.dart';
 import 'package:social_media_app/utils/providers.dart';
 import 'package:social_media_app/view_models/theme/theme_view_model.dart';
 
+//firebase setupped for backend database and flutter and dart for frontend
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Config.initFirebase();
