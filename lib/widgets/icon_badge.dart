@@ -8,7 +8,7 @@ class IconBadge extends StatefulWidget {
   final Color? color;
 
   IconBadge({Key? key, required this.icon, this.size, this.color})
-      : super(key: key);
+    : super(key: key);
 
   @override
   _IconBadgeState createState() => _IconBadgeState();
@@ -27,7 +27,7 @@ class _IconBadgeState extends State<IconBadge> {
         Icon(
           widget.icon,
           size: widget.size,
-          color: widget.color ?? null,
+          color: widget.color ?? null, //
         ),
         Positioned(
           right: 0.0,
@@ -37,12 +37,11 @@ class _IconBadgeState extends State<IconBadge> {
               color: Colors.red,
               borderRadius: BorderRadius.circular(6),
             ),
-            constraints: BoxConstraints(
-              minWidth: 11,
-              minHeight: 11,
+            constraints: BoxConstraints(minWidth: 11, minHeight: 11),
+            child: Padding(
+              padding: EdgeInsets.only(top: 1),
+              child: buildCount(),
             ),
-            child:
-                Padding(padding: EdgeInsets.only(top: 1), child: buildCount()),
           ),
         ),
       ],
@@ -51,10 +50,11 @@ class _IconBadgeState extends State<IconBadge> {
 
   buildCount() {
     StreamBuilder(
-      stream: notificationRef
-          .doc(firebaseAuth.currentUser!.uid)
-          .collection('notifications')
-          .snapshots(),
+      stream:
+          notificationRef
+              .doc(firebaseAuth.currentUser!.uid)
+              .collection('notifications')
+              .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
           QuerySnapshot snap = snapshot.data!;
@@ -70,10 +70,7 @@ class _IconBadgeState extends State<IconBadge> {
   buildTextWidget(String counter) {
     return Text(
       counter,
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 9,
-      ),
+      style: TextStyle(color: Colors.white, fontSize: 9),
       textAlign: TextAlign.center,
     );
   }
