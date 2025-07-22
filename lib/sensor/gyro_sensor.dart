@@ -12,7 +12,7 @@ class GyroscopeTiltView extends StatefulWidget {
   const GyroscopeTiltView({
     super.key,
     required this.child,
-    this.maxTiltAngle = 19.0,
+    this.maxTiltAngle = 20.0,
     this.sensitivity = 1.5,
   });
 
