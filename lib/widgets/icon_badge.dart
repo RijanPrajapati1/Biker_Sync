@@ -24,11 +24,7 @@ class _IconBadgeState extends State<IconBadge> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Icon(
-          widget.icon,
-          size: widget.size,
-          color: widget.color ?? null, //
-        ),
+        Icon(widget.icon, size: widget.size, color: widget.color ?? null),
         Positioned(
           right: 0.0,
           child: Container(
